@@ -1,0 +1,140 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebApp - Daniel Finotti</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+</head>
+
+<body>
+
+<header class="py-3 mb-3 border-bottom">
+    <div class="container-fluid d-flex align-items-center gap-3">
+
+        <!-- Menu de opções -->
+        <div class="dropdown">
+            <button class="btn btn-outline-light dropdown-toggle"
+                    type="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                Opções
+            </button>
+
+            <ul class="dropdown-menu shadow">
+                <li><a class="dropdown-item" href="/">Início</a></li>
+                <li><a class="dropdown-item" href="#">Configurações</a></li>
+                <li><a class="dropdown-item" href="#">Relatórios</a></li>
+                <li><a class="dropdown-item" href="{% url 'precos' %}">Preços</a></li>
+            </ul>
+        </div>
+
+        <!-- Busca -->
+        <form class="flex-grow-1" role="search" method="get" action="">
+            <input type="search"
+                   name="q"
+                   class="form-control"
+                   placeholder="Pesquisar..."
+                   aria-label="Pesquisar">
+        </form>
+
+        <!-- Perfil -->
+        <div class="dropdown">
+            <a href="#"
+               class="d-block text-decoration-none"
+               data-bs-toggle="dropdown"
+               aria-expanded="false">
+
+                <img src="https://i.postimg.cc/ZK2DyB45/baixados-(1).jpg"
+                     alt="Perfil"
+                     width="36"
+                     height="36"
+                     class="rounded-circle">
+            </a>
+
+            <ul class="dropdown-menu dropdown-menu-end shadow">
+                <li>
+                    <span class="dropdown-item-text">
+                        {% if user.is_authenticated %}
+                            {{ user.username }}
+                        {% else %}
+                            Visitante
+                        {% endif %}
+                    </span>
+                </li>
+
+                <li><hr class="dropdown-divider"></li>
+
+                {% if user.is_authenticated %}
+                    <li>
+                        <a class="dropdown-item" href="#">
+                            Meu perfil
+                        </a>
+                    </li>
+                    <li>
+                        <form method="post" action="{% url 'logout' %}">
+                            {% csrf_token %}
+                            <button type="submit" class="dropdown-item">
+                                Sair
+                            </button>
+                        </form>
+                    </li>
+                {% else %}
+                    <li>
+                        <a class="dropdown-item" href="{% url 'login' %}">
+                            Entrar
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+
+    </div>
+</header>
+
+<!-- Conteúdo principal -->
+<main>
+    <section class="px-4 pt-5 my-5 text-center border-bottom">
+
+        <h1 class="display-4 fw-bold text-body-emphasis">
+            Meu projeto Django
+        </h1>
+
+        <div class="col-lg-6 mx-auto">
+            <p class="lead mb-4">
+                Bem-vindo ao meu projeto! Aqui você pode apresentar
+                informações, funcionalidades e novidades do sistema.
+            </p>
+
+            <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
+                <a href="#" class="btn btn-primary btn-lg px-4 me-sm-3">
+                    Começar
+                </a>
+
+                <a href="#" class="btn btn-outline-light btn-lg px-4">
+                    Saiba mais
+                </a>
+            </div>
+        </div>
+
+        <div class="overflow-hidden" style="max-height: 30vh;">
+            <div class="container px-5">
+                <img src="{% static 'img/bootstrap-docs.png' %}"
+                     class="img-fluid border rounded-3 shadow-lg mb-4"
+                     alt="Imagem de demonstração"
+                     width="700"
+                     height="500"
+                     loading="lazy">
+            </div>
+        </div>
+
+    </section>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
